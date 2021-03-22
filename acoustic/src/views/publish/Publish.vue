@@ -34,7 +34,9 @@
       return {
         data: {
           title: '',
-          content: ''
+          content: '',
+          // 函数防抖
+          timer: null,
         },
         componentId: null
       }
@@ -49,22 +51,25 @@
           return;
         }
         this.data.content = editorData;
-        Bbs.publish(this.data).then(res => {
-          if (res.status === 200 && res.data === 1) {
-            this.componentId = 'PublishSuccess';
-            setTimeout(() => {
-              this.componentId = null;
-              this.$router.push('/bbs');
-            }, 1500);
-          } else {
-            this.componentId = 'PublishFailed';
-            setTimeout(() => {
-              this.componentId = null;
-            }, 1500);
-          }
-        }).catch(e => {
-          console.log(e.message);
-        });
+        clearTimeout(this.timer);
+        this.timer = setTimeout(() => {
+          Bbs.publish(this.data).then(res => {
+            if (res.status === 200 && res.data === 1) {
+              this.componentId = 'PublishSuccess';
+              setTimeout(() => {
+                this.componentId = null;
+                this.$router.push('/bbs');
+              }, 1500);
+            } else {
+              this.componentId = 'PublishFailed';
+              setTimeout(() => {
+                this.componentId = null;
+              }, 1500);
+            }
+          }).catch(e => {
+            console.log(e.message);
+          });
+        }, 1000);
       }
     },
   }
