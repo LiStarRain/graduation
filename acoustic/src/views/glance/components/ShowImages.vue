@@ -6,6 +6,7 @@
         <a :href="image.img">
           <img class="image-item" :src="image.img" alt="">
         </a>
+        <delete-image :info="{type: 'glance', id: image.id}"></delete-image>
         <download-image :imageUrl="image.img" :authorInfo="image.author"></download-image>
       </div>
     </div>
@@ -15,6 +16,7 @@
         <a :href="image.img">
           <img class="image-item" :src="image.img" alt="">
         </a>
+        <delete-image :info="{type: 'glance', id: image.id}"></delete-image>
         <download-image :imageUrl="image.img" :authorInfo="image.author"></download-image>
       </div>
     </div>
@@ -24,6 +26,7 @@
         <a :href="image.img">
           <img class="image-item" :src="image.img" alt="">
         </a>
+        <delete-image :info="{type: 'glance', id: image.id}"></delete-image>
         <download-image :imageUrl="image.img" :authorInfo="image.author"></download-image>
       </div>
     </div>
@@ -31,11 +34,13 @@
 </template>
 
 <script>
+  import DeleteImage from '../../../commonComponents/DeleteImage.vue';
   import DownloadImage from './DownloadImage';
   export default {
     name: 'ShowImages',
     components: {
-      DownloadImage
+      DownloadImage,
+      DeleteImage
     },
     props: ['showImages'],
     data() {

@@ -11,6 +11,8 @@
         <div class="title">
           <div class="head_img">
             <img :src="comment.user.head_img" alt="">
+            <delete-text v-show="authority == 1 || comment.user.username == username"
+              :info="{type: 'comment', id: comment.comment_id}"></delete-text>
           </div>
           <div class="comment-info">
             <p class="userrname">{{ comment.user.username }}</p>
@@ -57,13 +59,15 @@
   import Replys from './Replys.vue';
   import PublishSuccess from '../../publish/components/PublishSuccess.vue';
   import PublishFailed from '../../publish/components/PublishFailed.vue';
+  import DeleteText from '../../../commonComponents/DeleteText.vue';
 
   export default {
     name: 'ShowComments',
     components: {
       Replys,
       PublishSuccess,
-      PublishFailed
+      PublishFailed,
+      DeleteText
     },
     data() {
       return {
@@ -72,7 +76,9 @@
         replyUsername: '',
         // 回复的内容
         replyContent: '',
-        componentId: null
+        componentId: null,
+        authority: 0,
+        username: ''
       }
     },
     methods: {
@@ -108,6 +114,15 @@
       Comments.getComments(this.$route.query.articleId).then(res => {
         if (res.status === 200) {
           this.comments = res.data;
+        }
+      }).catch(e => {
+        console.log(e.message);
+      });
+
+      this.$User.getUserInfo().then(res => {
+        if (res.status == 200) {
+          this.authority = res.data.authority;
+          this.username = res.data.username;
         }
       }).catch(e => {
         console.log(e.message);
@@ -156,6 +171,7 @@
 
           .head_img {
             margin-right: 1rem;
+            position: relative;
 
             img {
               width: 3rem;

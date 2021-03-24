@@ -4,6 +4,8 @@
       <div class="action" v-for="(article,key) of articleList" :key="key">
         <div class="head_img">
           <img :src="article.head_img" alt="">
+          <delete-text v-show="authority == 1 || article.username == username"
+            :info="{type: 'article', id: article.id}"></delete-text>
         </div>
         <div class="content">
           <p @click="toArticle(article.id)" class="action-content">
@@ -21,9 +23,19 @@
 </template>
 
 <script>
+  import DeleteText from '../../../commonComponents/DeleteText.vue';
   export default {
+    components: {
+      DeleteText
+    },
     name: 'Actions',
     props: ['articleList'],
+    data() {
+      return {
+        authority: 0,
+        username: ''
+      }
+    },
     methods: {
       toArticle(article_id) {
         this.$router.push({
@@ -33,6 +45,16 @@
           }
         });
       }
+    },
+    created() {
+      this.$User.getUserInfo().then(res => {
+        if (res.status == 200) {
+          this.authority = res.data.authority;
+          this.username = res.data.username;
+        }
+      }).catch(e => {
+        console.log(e.message);
+      })
     },
   }
 </script>
@@ -62,6 +84,7 @@
           border-radius: .3rem;
           box-shadow: 0 0 3px 1px #ccc;
           margin-right: 1rem;
+          position: relative;
 
           img {
             width: 100%;

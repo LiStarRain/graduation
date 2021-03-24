@@ -62,9 +62,9 @@ export default new Vuex.Store({
     // 获取用户的消息
     getUserMessages(context) {
       Comments.getUserReplys().then(res => {
+        let temp = document.cookie.split(';').filter(item => item.includes('username'))[0];
+        let username = temp.split('=')[1];
         if (res.status === 200 && res.data instanceof Array && res.data.length > 0) {
-          let temp = document.cookie.split(';').filter(item => item.includes('username'))[0];
-          let username = temp.split('=')[1];
           // 提交数据
           context.commit('setUserMessages', res.data);
           // 初始化消息数目
@@ -76,8 +76,12 @@ export default new Vuex.Store({
               // 有新消息来了
               context.commit('setNewMessages');
               localStorage.setItem(`messages${username}`, res.data.length);
+            } else {
+              localStorage.setItem(`messages${username}`, res.data.length);
             }
           }
+        } else {
+          localStorage.setItem(`messages${username}`, 0);
         }
       }).catch(e => {
         console.log(e.message);
@@ -86,9 +90,9 @@ export default new Vuex.Store({
 
     getUserComments(context) {
       Comments.getUserComments().then(res => {
+        let temp = document.cookie.split(';').filter(item => item.includes('username'))[0];
+        let username = temp.split('=')[1];
         if (res.status === 200 && res.data instanceof Array && res.data.length > 0) {
-          let temp = document.cookie.split(';').filter(item => item.includes('username'))[0];
-          let username = temp.split('=')[1];
           // 提交数据
           context.commit('setUserComments', res.data);
           // 初始化消息数目
@@ -100,8 +104,12 @@ export default new Vuex.Store({
               // 有新消息来了
               context.commit('setNewMessages');
               localStorage.setItem(`comments${username}`, res.data.length);
+            } else {
+              localStorage.setItem(`comments${username}`, res.data.length);
             }
           }
+        } else {
+          localStorage.setItem(`comments${username}`, 0);
         }
       }).catch(e => {
         console.log(e.message);

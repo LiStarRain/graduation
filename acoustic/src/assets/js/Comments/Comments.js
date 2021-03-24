@@ -52,4 +52,22 @@ export default class Comments {
     const url = '/controllers/commentsControllers/getUserComments.php';
     return Axios.get(url);
   }
+
+  // 删除评论
+  static deleteUserComment(id) {
+    const url = '/controllers/commentsControllers/deleteUserComment.php';
+    const postData = qs.stringify({
+      id
+    });
+    return Axios.post(url, postData);
+  }
+
+  // 删除回复
+  static deleteUserReply(id) {
+    const url = '/controllers/commentsControllers/deleteUserReply.php';
+    const postData = qs.stringify({
+      id
+    });
+    return Axios.post(url, postData);
+  }
 }

@@ -31,7 +31,7 @@
     methods: {
       deleteImage(image_id, index) {
         Glance.deleteImage(image_id).then(res => {
-          if (res.status === 200 && res.data) {
+          if (res.status === 200 && res.data == 1) {
             this.images.splice(index, 1);
           }
         }).catch(e => {

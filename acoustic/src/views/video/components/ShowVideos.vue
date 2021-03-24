@@ -6,6 +6,7 @@
         <a @click.prevent="">
           <img class="image-item" :src="video.poster" alt="">
         </a>
+        <delete-image :info="{type: 'video', id: video.id}"></delete-image>
         <play-button :video="video" @playVideo="playVideo(video)"></play-button>
       </div>
     </div>
@@ -15,6 +16,7 @@
         <a @click.prevent="">
           <img class="image-item" :src="video.poster" alt="">
         </a>
+        <delete-image :info="{type: 'video', id: video.id}"></delete-image>
         <play-button :video="video" @playVideo="playVideo(video)"></play-button>
       </div>
     </div>
@@ -24,6 +26,7 @@
         <a @click.prevent="">
           <img class="image-item" :src="video.poster" alt="">
         </a>
+        <delete-image :info="{type: 'video', id: video.id}"></delete-image>
         <play-button :video="video" @playVideo="playVideo(video)"></play-button>
       </div>
     </div>
@@ -31,10 +34,12 @@
 </template>
 
 <script>
+  import DeleteImage from '../../../commonComponents/DeleteImage.vue';
   import PlayButton from './PlayButton.vue';
   export default {
     components: {
-      PlayButton
+      PlayButton,
+      DeleteImage
     },
     name: 'ShowVideos',
     props: ['showPosters'],

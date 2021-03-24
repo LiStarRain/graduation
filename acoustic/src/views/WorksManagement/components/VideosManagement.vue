@@ -47,7 +47,7 @@
       },
       deleteVideo(video_id, index) {
         Video.deleteUserVideo(video_id).then(res => {
-          if (res.status === 200 && res.data) {
+          if (res.status === 200 && res.data == 1) {
             this.videos.splice(index, 1);
           }
         }).catch(e => {
