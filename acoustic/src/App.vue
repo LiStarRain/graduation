@@ -56,10 +56,10 @@
     },
     async mounted() {
       // 绑定网易云歌单
-      const netease = new Netease();
-      const data = await netease.make();
-      this.audio = data;
-      this.isShow = true;
+      // const netease = new Netease();
+      // const data = await netease.make();
+      // this.audio = data;
+      // this.isShow = true;
     },
   }
 </script>

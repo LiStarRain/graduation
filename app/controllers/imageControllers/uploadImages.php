@@ -6,11 +6,13 @@ header('Content-type: application/json;charset = utf-8');
 use App\Uploader\GlanceUploader;
 use \App\User;
 use \App\DB;
+use \App\Water;
 
 include '../../Uploader/Uploader.php';
 include '../../Uploader/GlanceUploader.php';
 include '../../User/User.php';
 include '../../DB/DB.php';
+include '../../Water/Water.php';
 
 // 图片标签
 $tag = $_POST['tag'];
@@ -28,6 +30,7 @@ $userId = $user->getUserId($username)[0]['id'];
 $uploader = new GlanceUploader\GlanceUploader($username);
 $images = $uploader->make();
 
+$water = new Water\Water;
 // 存入数据库
 $db = new DB\DB;
 $sql = 'INSERT glance_images(author_id,img,`desc`,tag)
@@ -40,6 +43,8 @@ try {
       'desc' => $desc,
       'tag' => $tag
     ];
+    // 添加水印
+    $water->make($image['path'], $image['path'], 1);
     $db->insert($sql, $vars);
   }
   echo json_encode(1);

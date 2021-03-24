@@ -9,7 +9,7 @@ class Water
 {
   // 水印图资源
   protected $water;
-  public function __construct(string $water)
+  public function __construct(string $water = '/Users/ame/code/graduation/app/Water/water.png')
   {
     $this->water = $water;
   }

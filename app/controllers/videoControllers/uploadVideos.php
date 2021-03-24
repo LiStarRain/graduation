@@ -5,11 +5,13 @@ header('Content-type: application/json;charset:utf-8');
 use \App\Uploader\VideoUploader;
 use \App\User;
 use \App\DB;
+use \App\Water;
 
 include '../../Uploader/VideoUploader.php';
 include '../../Uploader/Uploader.php';
 include '../../User/User.php';
 include '../../DB/DB.php';
+include '../../Water/Water.php';
 
 $username = $_COOKIE['username'];
 
@@ -18,6 +20,10 @@ $uploader = new VideoUploader\VideoUploader($username);
 $info = $uploader->make();
 $poster = $info['poster']['poster'];
 $source = $info['source']['source'];
+
+// 给视频封面加水印
+$water = new Water\Water;
+$water->make($info['poster']['path'], $info['poster']['path'], 1);
 
 // 获取用户id
 $user = new User\User;
