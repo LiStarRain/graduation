@@ -10,7 +10,7 @@ header('Content-type: application/json');
 
 $db = new DB\DB();
 $count = 12;
-$sql = "SELECT img,`desc`,tag,username,head_img FROM glance_images AS gi
+$sql = "SELECT img,`desc`,tag,username,head_img,gi.id FROM glance_images AS gi
         INNER JOIN account AS a
         INNER JOIN user_info AS ui
         WHERE FIND_IN_SET(:tag, tag)
@@ -22,6 +22,7 @@ $res = $db->query($sql, ['tag' => $_GET['tag']]);
 $data = [];
 foreach ($res as $image) {
   $data[] = [
+    'id' => $image['id'],
     'img' => $image['img'],
     'desc' => $image['desc'],
     'tag' => $image['tag'],

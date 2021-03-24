@@ -10,7 +10,7 @@ header('Content-type: application/json');
 
 $db = new DB\DB();
 $count = 12;
-$sql = "SELECT username,head_img,poster,`desc`,src,tag
+$sql = "SELECT username,head_img,poster,`desc`,src,tag,v.id
         FROM videos AS v
         INNER JOIN account AS a
         INNER JOIN user_info as ui 
@@ -24,6 +24,7 @@ $res = $db->query($sql, ['tag' => $_GET['tag']]);
 $data = [];
 foreach ($res as $video) {
   $data[] = [
+    'id' => $video['id'],
     'poster' => $video['poster'],
     'desc' => $video['desc'],
     'tag' => $video['tag'],

@@ -14,7 +14,6 @@ $path = $db->query($get_path, ['id' => $_POST['id']])[0]['img'];
 $path = preg_replace('/^https?:\/\/localhost:8888\//', '../../', $path);
 
 if (is_file($path)) {
-  echo $path;
   $deleteStatus = unlink($path);
 }
 

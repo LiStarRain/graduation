@@ -27,7 +27,7 @@ class Reply
   public function getReply(int $comment_id)
   {
     $db = new DB\DB;
-    $sql1 = "SELECT a.username,r.content,ui.head_img FROM replys AS r
+    $sql1 = "SELECT a.username,r.content,ui.head_img,r.id FROM replys AS r
     INNER JOIN account AS a
     INNER JOIN user_info AS ui
     INNER JOIN comments AS c
@@ -51,6 +51,7 @@ class Reply
     $res = [];
     foreach ($from as $key => $field) {
       $res[] = [
+        'id' => $field['id'],
         'from_username' => $field['username'],
         'head_img' => $field['head_img'],
         'to_username' => $to[$key]['username'],

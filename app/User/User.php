@@ -56,7 +56,7 @@ class User
   {
     $db = new DB\DB;
     // 多表查询
-    $sql = "SELECT  username,head_img,sex,age,birthday,register_time FROM account AS a
+    $sql = "SELECT  username,head_img,sex,age,birthday,register_time,authority FROM account AS a
       INNER JOIN user_info AS ui
       ON a.id = ui.user_id 
       WHERE a.username = :username;";
