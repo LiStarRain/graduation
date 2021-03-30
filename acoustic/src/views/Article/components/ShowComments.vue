@@ -55,6 +55,9 @@
 </template>
 
 <script>
+  import {
+    mapState
+  } from 'vuex';
   import Comments from '../../../assets/js/Comments/Comments.js';
   import Replys from './Replys.vue';
   import PublishSuccess from '../../publish/components/PublishSuccess.vue';
@@ -78,8 +81,12 @@
         replyContent: '',
         componentId: null,
         authority: 0,
-        username: ''
+        username: '',
+        timer: null
       }
+    },
+    computed: {
+      ...mapState(['loginStatus'])
     },
     methods: {
       reply(index, username) {
@@ -87,22 +94,30 @@
         this.replyUsername = username;
       },
       postReply(commentId) {
-        Comments.postReply(this.replyUsername, this.replyContent, commentId).then(res => {
-          if (res.status === 200 && res.data == 1) {
-            this.componentId = 'PublishSuccess';
-            setTimeout(() => {
-              this.componentId = null;
-              this.$router.go(0);
-            }, 1500);
-          } else {
-            this.componentId = 'PublishFailed';
-            setTimeout(() => {
-              this.componentId = null;
-            }, 1500);
-          }
-        }).catch(e => {
-          console.log(e.message);
-        });
+        if (!this.loginStatus) {
+          this.$router.push('/login');
+          return;
+        }
+        // 函数防抖
+        clearTimeout(this.timer);
+        this.timer = setTimeout(() => {
+          Comments.postReply(this.replyUsername, this.replyContent, commentId).then(res => {
+            if (res.status === 200 && res.data == 1) {
+              this.componentId = 'PublishSuccess';
+              setTimeout(() => {
+                this.componentId = null;
+                this.$router.go(0);
+              }, 1500);
+            } else {
+              this.componentId = 'PublishFailed';
+              setTimeout(() => {
+                this.componentId = null;
+              }, 1500);
+            }
+          }).catch(e => {
+            console.log(e.message);
+          });
+        }, 500);
       },
       onReply(from, flag) {
         this.replyFlag = flag;
