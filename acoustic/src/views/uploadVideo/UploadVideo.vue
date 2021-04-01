@@ -47,7 +47,7 @@
         this.uploadStatus = false;
         this.$bvModal.show('bv-modal-upload-success');
         this.timer = setTimeout(() => {
-          this.$router.push('/glance');
+          this.$router.push('/video');
         }, 3000);
       },
       clearSuccessTimer() {
